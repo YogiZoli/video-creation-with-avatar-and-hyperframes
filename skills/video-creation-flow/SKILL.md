@@ -8,7 +8,11 @@ description: Build bright, dense kinetic-typography explainer videos with the lo
 Produce bright, dense, kinetic-typography explainer videos with the **local HyperFrames exp-v9 engine** (0 render credits) plus optional HeyGen avatar circles. Everything runs on the local machine via Desktop Commander.
 
 ## STEP 0 — read the config FIRST (every run)
-Before doing anything, read **`config.yaml`** that ships next to this SKILL.md. It holds the per-user values: ElevenLabs voice ID, HeyGen avatar ID, the local path to the engine folder, the DESIGN.md Drive link, the BGM ceiling, and the Drive delivery folder. If any required field is still blank, ask the user to fill it in `config.yaml` before continuing. Never hardcode IDs in the engine — always take them from `config.yaml`.
+Before doing anything, read **`config.yaml`** next to this SKILL.md. **Everything in it is OPTIONAL — never block or get stuck on a blank field.** Resolve two things up front and just tell the user what you picked:
+- **Voice:** if `voiceover.elevenlabs_voice_id` is set (and provider is auto/elevenlabs), use ElevenLabs. Otherwise fall back to the **free** engine (`voiceover.free_engine`, default edge-tts — no account, no API key). If the user dropped their own `assets/vo.mp3`, use that. The flow MUST be able to start with no ElevenLabs at all.
+- **Avatar:** if `avatar.heygen_avatar_id` is set (and enabled is auto/on), add the HeyGen circles at the end. If it is blank (or enabled=off), **skip the avatar entirely — the motion-graphics render is the final video.**
+
+Only ask the user something if they explicitly want an upgrade you can't infer; otherwise proceed with the safe defaults above. Never hardcode IDs in the engine — always read them from `config.yaml`.
 
 ## Engine files (ship with this skill, in `engine/`)
 - **`engine/DESIGN.md`** — the visual + motion language (source of truth for the look).
@@ -22,15 +26,15 @@ Before doing anything, read **`config.yaml`** that ships next to this SKILL.md. 
 - **One-word emphasis only:** exactly ONE word per sentence, BOLD + BLUE.
 - **~4x more scenes / fast punchy pace — top priority.** Many short scenes; every element appears from nothing, staggered.
 - **Minimalist / simplistic and NOT loud.** Bright background always. Everything off the edges (>=~140px safe margin). Counter-bar badge centered, never overflowing or hitting the kicker.
-- Dashboards say **"GoHighLevel"** (never "Studio"). Keywords caps: YES / GUIDE / ACTION / TRIGGER / BUY. **Never the word "CRM". No "-" dashes in script/VO.**
+- Dashboard mockups use a neutral label (ships as "Dashboard") — or set your own product name. Put keywords in CAPS (e.g. YES / BUY / your keyword). **No "-" dashes in script/VO.**
 - Archetypes: hero, statement (one-word emphasis), arrow (+ OWN glow), funnel, comment pill, branch, split, gohighlevel form with typing, lead card + moving ZOOM, counter-bars (+ badge, count-up from 0), orbiting personas, sequential end CTA. Vary them.
 
 ## Workflow (approval-gated — one gate at a time, approve before the next)
-1. **Script (text)** — plain-language ownership copy, no dashes, no "CRM". Deliver as a copyable artifact. Approve.
-2. **Voiceover** — ElevenLabs clone using `elevenlabs.voice_id` + settings from `config.yaml`. Approve.
-3. **VO + background music** — quiet uplifting bed, **BGM <= `music.bgm_ceiling_percent` (max 10)**. This mix becomes `assets/vo.mp3`. Approve.
-4. **Motion graphics (local HyperFrames)** — map the approved script to the `S` array; scene timing = word-count proportion of the VO (engine reads real duration from `assets/vo.mp3`). Approve.
-5. **HeyGen avatar circles** — added LAST, only after motion graphics is approved.
+1. **Script (text)** — plain-language copy, no dashes. Deliver as a copyable artifact. Approve.
+2. **Voiceover (optional provider)** — if an ElevenLabs voice_id is set, clone with it + the settings in `config.yaml`. Otherwise generate a FREE voiceover with `voiceover.free_engine` (edge-tts, `voiceover.free_voice`) — no key needed. Or use a user-supplied `assets/vo.mp3`. Approve.
+3. **VO + background music** — quiet uplifting bed, **BGM <= `music.bgm_ceiling_percent` (max 10; 0 = none)**. This mix becomes `assets/vo.mp3`. Approve.
+4. **Motion graphics (local HyperFrames)** — map the approved script to the `S` array; scene timing = word-count proportion of the VO (engine reads real duration from `assets/vo.mp3`). Approve. **If no avatar is configured, THIS is the finished video.**
+5. **HeyGen avatar circles (optional)** — only if `avatar.heygen_avatar_id` is set (enabled auto/on). If not, skip this step completely.
 
 ## Build + render (Desktop Commander, cmd shell, in the engine folder)
 - Edit only the `S` array in `build.mjs`, then `node build.mjs` to write `index.html`.
@@ -38,10 +42,11 @@ Before doing anything, read **`config.yaml`** that ships next to this SKILL.md. 
 - **No external Google Fonts `<link>` in the generated HTML.** On some networks it never fires the load event and the render hangs with a navigation timeout. The compiler injects Inter locally and inlines the gsap CDN script, so the look is identical. `build.mjs` omits the font link on purpose — keep it omitted.
 - **Render:** `npx --yes hyperframes@0.7.68 render --quality high --browser-timeout 180 --output "<name>_vN_YYYY-MM-DD_HHMM.mp4"`. New timestamped filename each time. Present a SHORT lock-preview first, approve the motion feel, then full render. Local render = 0 credits. Animate transforms only; per-letter kinetic text needs solid colors.
 
-## HeyGen avatar circles (hard rules — do NOT deviate)
+## HeyGen avatar circles (OPTIONAL — skip if no avatar_id)
+- If `avatar.heygen_avatar_id` is blank or `avatar.enabled` is off, DO NOT add any avatar — the motion-graphics render is already the final deliverable. Only follow the rules below when an avatar is configured.
 - 4 circles: opening + 2 middle + closing, at natural pauses.
-- Use `heygen.avatar_id` + `heygen.engine` from `config.yaml`, 1:1 720p. Drive each circle from the FINISHED video's own baked audio at that timestamp (ffmpeg `silencedetect` for clean sentence boundaries) so lip-sync is exact.
-- **Transparent-background webm, composited EXACTLY as received — ZERO edits.** Never stretch, squeeze, oval-ize, add a veil/fade, re-compress, crop, or mask. Overlay AS-IS at `heygen.circle_px` (360), bottom-right, ~40px margin, no border, **audio muted**.
+- Use `avatar.heygen_avatar_id` + `avatar.heygen_engine` from `config.yaml`, 1:1 720p. Drive each circle from the FINISHED video's own baked audio at that timestamp (ffmpeg `silencedetect` for clean sentence boundaries) so lip-sync is exact.
+- **Transparent-background webm, composited EXACTLY as received — ZERO edits.** Never stretch, squeeze, oval-ize, add a veil/fade, re-compress, crop, or mask. Overlay AS-IS at `avatar.circle_px` (360), bottom-right, ~40px margin, no border, **audio muted**.
 - **HeyGen Video Agent is BANNED** (burns the avatar in, no lip-sync, ~200 credits). Use `create_asset_upload` -> PUT the audio with `curl.exe` -> `complete_asset_upload` -> `create_video_from_avatar`.
 
 ## Delivery: Drive upload + local cleanup
@@ -49,6 +54,6 @@ Before doing anything, read **`config.yaml`** that ships next to this SKILL.md. 
 - Delete drafts / non-approved earlier versions; do not upload those. After upload, delete related local files.
 
 ## Standing rules
-- No "-" dashes; never "CRM"; plain-language ownership.
+- No "-" dashes; plain-language copy.
 - Prompts/scripts as copyable artifacts with a Copy button.
 - Git / local files via Desktop Commander; do the work, do not ask the user to push or run the render.

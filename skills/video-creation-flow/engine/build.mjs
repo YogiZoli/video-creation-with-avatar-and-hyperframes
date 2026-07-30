@@ -1,4 +1,4 @@
-// C2C Expansion Pack — merged engine (exp-v9 bright kinetic base + build5 loved components), per DESIGN.md.
+// Video Creation Flow — HyperFrames exp-v9 kinetic motion-graphics engine, per DESIGN.md. Brand independent.
 // Per video: edit ONLY the S array. Timing = word-count proportion of the VO (assets/vo.mp3).
 import { execSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
@@ -9,83 +9,17 @@ const BLUE='#1a73e8', NAVY='#0e2038', GREEN='#34a853', ORANGE=GREEN; // accent =
 
 // ---- SCENES (demo set; replace with full script mapped to scenes). `w` = spoken text for timing. ----
 const S = [
-  { type:'hero', kick:'YOU REPLIED YES', title:'EXPANSION PACK', sub:'Your free upgrade is unlocked.', w:'Thank you for replying YES. As promised, here is your free Expansion Pack.' },
-  { type:'statement', kick:'REAL RESULTS', lines:['You actually want','REAL RESULTS'], emph:1, w:'You replied YES, so I know you actually want real results.' },
-  { type:'statement', kick:'ACTION TAKER', lines:['You are an','ACTION TAKER'], emph:1, w:'You are an action taker, and I treat action takers differently.' },
-  { type:'statement', lines:['No pitch here.','JUST VALUE'], emph:1, sub:'I will not try to sell you anything.', w:'Unlike most marketers, I won\'t try to sell you anything here.' },
-  { type:'statement', lines:['No upsells. No upgrades.','NOTHING'], emph:1, w:'No upsells. No upgrades. Nothing.' },
-  { type:'statement', kick:'YOU RAISED YOUR HAND', lines:['You replied YES.','THAT MATTERS'], emph:1, sub:'You did not just join a list.', w:'Someone who doesn\'t just join a list, but actually raises their hand and replies YES, even something that small, that person matters to me.' },
-  { type:'statement', lines:['I appreciate','YOUR TRUST'], emph:1, w:'I really appreciate your trust, and I want you to get the most out of this.' },
-  { type:'statement', kick:'WHAT YOU WILL LEARN', lines:['Higher opt in rate.','CONVERSIONS'], emph:1, w:'Here is what you will learn. How to increase your opt in rate and your conversions.' },
-  { type:'arrow', a:'COMMENT', b:'CLIENT', w:'And the method behind Comment to Client.' },
-  { type:'statement', lines:['No app needed.','SAME METHOD'], emph:1, sub:'It still lifts your conversions.', w:'Even if you never touch the app, you can use this method, and it will increase your conversions.' },
-  { type:'split', left:'Cold email', right:'Authentic', word:'AUTHENTIC', sub:'Not pushy. Ever.', w:'These methods are authentic. They aren\'t pushy like cold email.' },
-  { type:'statement', lines:['Use it with or','WITHOUT the app'], emph:1, w:'And you can use them with or without the app.' },
-  { type:'pill', text:'Forever <b>FREE</b> plan', w:'You already have the forever free plan.' },
-  { type:'gohighlevel', sub:'I run everything inside GoHighLevel.', w:'And I know not everyone uses GoHighLevel. I use it myself, and it\'s amazing, better than any other tool I have ever used.' },
-  { type:'statement', lines:['The method works','WITHOUT it too'], emph:1, w:'But you can use the Comment to Client method even without it.' },
-  { type:'statement', kick:'THE METHOD', lines:['Let me','SHOW YOU'], emph:1, w:'So let me show you the method.' },
-  { type:'statement', kick:'ONE IDEA', lines:['It starts with','TEMPERATURE'], emph:1, w:'It starts with one idea. Lead temperature.' },
-  { type:'funnel', kick:'LEAD TEMPERATURE', sub:'Hot, warm, cold. Not all the same.', w:'Your viewers aren\'t all the same. Some are hot. Some are warm. And some are cold.' },
-  { type:'statement', kick:'HOT LEADS', lines:['Ready to act','RIGHT NOW'], emph:1, sub:'They know the problem and the price.', w:'Hot leads are ready to act right now. They know their problem. They know the solution. And they have the money to spend with you.' },
-  { type:'arrow', a:'HOT', b:'SALES PAGE', w:'They don\'t want to waste time. So you send them straight to your sales page, where they can buy.' },
-  { type:'statement', lines:['Not cold selling.','THEY ASKED'], emph:1, w:'And this isn\'t cold selling. They raised their hand first.' },
-  { type:'pill', text:'They commented <b>ACTION</b>', w:'They commented ACTION, or TRIGGER, below your video.' },
-  { type:'statement', lines:['You did not chase.','THEY CAME'], emph:1, w:'You didn\'t chase them. They asked you to send them your offer.' },
-  { type:'statement', lines:['Not pushy.','INTERESTED'], emph:1, w:'So it\'s not pushy. They are clearly interested.' },
-  { type:'statement', lines:['They came to you.','EVERYTHING'], emph:1, sub:'It changes everything.', w:'And because they came to you, it changes everything.' },
-  { type:'statement', kick:'WARM AND COLD', lines:['They need','MORE FIRST'], emph:1, w:'Warm and cold leads are different. They need more first.' },
-  { type:'statement', lines:['First deepen the','RELATIONSHIP'], emph:1, sub:'Before you offer anything.', w:'You deepen the relationship before you offer anything.' },
-  { type:'split', left:'Cold email', right:'Real value', word:'VALUE', sub:'You never bother them.', w:'You don\'t bother them like a cold email would.' },
-  { type:'pill', text:'Send the <b>GUIDE</b>', sub:'They asked for more, so you give more.', w:'They asked for more, so you give them more. You send them a guide, and you build trust.' },
-  { type:'statement', lines:['When ready,','THEY TELL YOU'], emph:1, sub:'Then, and only then, you invite them to buy.', w:'When they are ready, they will tell you. Then, and only then, you invite them to buy.' },
-  { type:'branch', from:'Comment', a:['GUIDE','the guide'], b:['ACTION','sales page'], sub:'The sales page is only for ACTION.', w:'So the sales page isn\'t for everyone. It is only for the people who comment ACTION or TRIGGER.' },
-  { type:'statement', lines:['They said it','OUT LOUD'], emph:1, sub:'I want the result and I am ready.', w:'Those people said, out loud, I want the result and I am ready.' },
-  { type:'pill', text:'Comment <b>GUIDE</b>, get the guide', w:'The people who comment GUIDE simply get your guide.' },
-  { type:'statement', kick:'THE HEART OF IT', lines:['Treat viewers by','TEMPERATURE'], emph:1, w:'That is the heart of it. You treat viewers differently based on their temperature.' },
-  { type:'statement', lines:['They raised their hand.','ONE SHIFT'], emph:1, sub:'One shift changes everything.', w:'They asked for it, they raised their hand. One shift changes everything.' },
-  { type:'statement', kick:'INSIDE A VIDEO', lines:['Here is','HOW TO RUN IT'], emph:1, w:'Now let me show you exactly how to run this inside a video.' },
-  { type:'pill', text:'Comment <b>GUIDE</b> below', sub:'Say it early in the video.', w:'Early in the video, say this: if you are interested in this, comment GUIDE below, and I will send it to you.' },
-  { type:'statement', lines:['Your first','KEYWORD'], emph:1, w:'GUIDE is your first keyword.' },
-  { type:'gohighlevel', sub:'A guide for their email. PDF or video.', w:'Then you deliver the guide in exchange for their email address. Usually a PDF or a video. Not a sales page.' },
-  { type:'statement', kick:'PAST THE HALFWAY POINT', lines:['Spot who is','READY TO BUY'], emph:1, w:'Later, deeper into the video, past the halfway point, identify those who are ready to buy.' },
-  { type:'pill', text:'Comment <b>TRIGGER</b> below', sub:'Send them the page to start today.', w:'Say this: If you are ready to pull the trigger, comment TRIGGER below, and I will send you the page where you can get it and start today.' },
-  { type:'statement', lines:['By now,','THEY KNOW YOU'], emph:1, sub:'They watched most of your video.', w:'Here is why this works. By that point they have watched most of your video. They know you.' },
-  { type:'statement', lines:['They comment ACTION.','READY'], emph:1, w:'So if they comment ACTION or TRIGGER, they are clearly ready.' },
-  { type:'arrow', a:'COMMENT', b:'SALES PAGE', w:'Now you can send them a different page. A sales page. They asked for it. So they came to you.' },
-  { type:'arrow', a:'COMMENT', b:'CLIENT', glow:'OWN', w:'This is the key. This is the shortest path from a comment to a client.' },
-  { type:'statement', kick:'COURSE OR SERVICE', lines:['The fastest way from','COMMENT TO CLIENT'], emph:1, w:'If you sell a course, coaching, consulting, or a service, this is the fastest way to go from comment to client that exists.' },
-  { type:'pill', text:'Comment <b>ACTION</b> for the link', sub:'You can be completely transparent.', w:'And you can be completely transparent. You can literally say: Comment ACTION, and I will send you the link to buy my course. That is fine.' },
-  { type:'statement', lines:['They know you.','THEY TRUST YOU'], emph:1, w:'They already watched your video. They know you. They trust you. They know what your offer is about.' },
-  { type:'statement', lines:['Exactly what','THEY ASKED FOR'], emph:1, w:'They raised their hand. Sending them the offer isn\'t pushy. It is exactly what they asked for.' },
-  { type:'personas', kick:'WORKS FOR EVERYONE', sub:'Creator or agency. Same method.', w:'Think about what this gives you. It doesn\'t matter if you are a creator building your own audience, or an agency running this for your clients. The method is the same.' },
-  { type:'statement', lines:['Handle every lead by','TEMPERATURE'], emph:1, w:'You handle every lead by their buying temperature.' },
-  { type:'statement', lines:['Offer only after','REAL VALUE'], emph:1, w:'You only make an offer to people who actually want to buy, and only after you gave them real value.' },
-  { type:'statement', lines:['Pull them deeper','WITH YOUR GUIDE'], emph:1, w:'You pull the warm and cold ones deeper into your world with your guide, before they are ready.' },
-  { type:'leadzoom', sub:'You keep the contact. You own the relationship.', w:'But you never lose those who aren\'t ready to buy just yet. And you have their contact, which means you have time to build a real relationship.' },
-  { type:'statement', lines:['Never bother anyone.','THEY ASKED'], emph:1, w:'You never bother anyone with an offer they didn\'t ask for.' },
-  { type:'statement', lines:['Quicker for you.','FOCUS ON BUYERS'], emph:1, w:'Even better, it\'s quicker for you as well, because you focus on people who are ready to go ahead and buy, and you don\'t spend time with those who just aren\'t ready to buy yet.' },
-  { type:'gohighlevel', sub:'AI drafts your reply. Every step tracked.', w:'If you use my app, your response is drafted with AI, unique and YouTube safe, and every step is tracked inside your GoHighLevel.' },
-  { type:'statement', lines:['Or run it','FREE BY HAND'], emph:1, sub:'Reply to the email. I read every one.', w:'But even without the app, you can run this for free by hand. And if a question comes up about implementing it, just reply to the email, I read every one.' },
-  { type:'statement', kick:'MAKE IT SIMPLE', lines:['Two steps,','THEN REPEAT'], emph:1, w:'Let me make it simple. Two steps, then repeat.' },
-  { type:'pill', text:'Step one. Comment <b>GUIDE</b>', sub:'Send them to your free guide.', w:'One. Early in the video, say: Comment GUIDE below, and I will send you my guide. Send them to a page where they download your free guide. Usually a PDF, or something similar.' },
-  { type:'pill', text:'Step two. Comment <b>TRIGGER</b>', sub:'They know you. They are ready to buy.', w:'Two. In the second half, say: If you are ready to pull the trigger, comment TRIGGER below, and I will help you implement this. These people already know you. They are raising their hand. They are ready to buy.' },
-  { type:'statement', lines:['Repeat both calls.','GUIDE and TRIGGER'], emph:1, sub:'At least two calls to action per video.', w:'Then, at the end, repeat your calls to action, GUIDE and TRIGGER. Use at least two calls to action per video.' },
-  { type:'statement', lines:['More invitations.','MORE BUYERS'], emph:1, w:'More invitations means more people sign up, and more people buy.' },
-  { type:'statement', kick:'WHAT MOST GET WRONG', lines:['They play for the','ALGORITHM'], emph:1, w:'This is the part most creators get wrong. Most people play for the algorithm.' },
-  { type:'statement', lines:['Views, fame, AdSense.','WRONG GAME'], emph:1, w:'They chase views, virality, fame, AdSense, or a sponsorship. That is the wrong game.' },
-  { type:'statement', lines:['Play for your','AUDIENCE'], emph:1, sub:'Not the algorithm.', w:'Play for your audience, not the algorithm.' },
-  { type:'arrow', a:'VIEWER', b:'CONTACT', w:'With the Comment to Client method, you turn a viewer into a real contact.' },
-  { type:'statement', lines:['Build a real','RELATIONSHIP'], emph:1, sub:'Or they buy right away.', w:'Now you have time to build a real relationship. Or they buy right away.' },
-  { type:'statement', lines:['They ask for it.','YOUR RESULTS'], emph:1, sub:'You never bother anyone.', w:'This one simple change, you never bother anyone, they ask for it themselves, is what changes your results.' },
-  { type:'counterbars', kick:'DO THE MATH', sub:'Separate buyers from browsers. Multiply revenue.', w:'If you turn viewers into real subscribers, and you separate those who are just interested from those who are real buyers, it will multiply your revenue.' },
-  { type:'statement', kick:'REVENUE ATTRIBUTION', lines:['Know which video','MAKES MONEY'], emph:1, w:'And if you use my app, you know exactly which video brings you money. Revenue attribution shows you exactly which video produced the result.' },
-  { type:'statement', kick:'REMEMBER ONE THING', lines:['Build on what you','CONTROL'], emph:1, sub:'Not on hope.', w:'If you remember only one thing from this video, this is it. Build your revenue on something you control, not on hope.' },
-  { type:'split', left:'AdSense, sponsors', right:'Your email list', word:'CONTROL', sub:'You do not control the first.', w:'You DO NOT control: AdSense. Affiliate. Sponsorship.' },
-  { type:'statement', lines:['You cannot build on','HOPE'], emph:1, w:'You can\'t build your revenue on hope.' },
-  { type:'statement', kick:'OWN IT', lines:['Real contacts,','REAL BUYERS'], emph:1, sub:'An email list, independent of the algorithm.', w:'Rely on something you can control: an email list. Real contacts, with real emails. And real buyers. Independent of the algorithm.' },
-  { type:'statement', lines:['Any question?','JUST REPLY'], emph:1, sub:'I read every reply personally.', w:'If you have any question about this strategy, just reply to the email you received. I read every reply personally, and I will answer you.' },
-  { type:'endcta', title:'Reply <b>BUY</b>', pill:'100% OWNERSHIP', btn:'Get Instant Access', w:'And if you are ready to experience the difference in ACTION, fully automatic, reply BUY, and I will send you my page where you can get it and start today.' },
+  { type:'hero', kick:'WELCOME', title:'YOUR TITLE', sub:'Your subtitle goes here.', w:'Open with a short hook that tells them what they will get.' },
+  { type:'statement', kick:'BIG IDEA', lines:['One clear','MESSAGE'], emph:1, w:'State one clear message and emphasize a single key word.' },
+  { type:'arrow', a:'PROBLEM', b:'RESULT', glow:'OWN', w:'Show the transformation from the problem to the result they want.' },
+  { type:'funnel', kick:'THREE LEVELS', sub:'Top, middle, bottom.', w:'Break your idea into three simple levels from biggest to smallest.' },
+  { type:'pill', text:'Comment <b>WORD</b> below', w:'Give them one simple action, a single keyword to type or click.' },
+  { type:'split', left:'The old way', right:'The better way', word:'BETTER', sub:'Contrast two options.', w:'Contrast the old way with the better way and name the winner.' },
+  { type:'gohighlevel', sub:'Every step tracked in your dashboard.', w:'Show the tool where the name and the email get captured and tracked.' },
+  { type:'leadzoom', sub:'Every contact becomes yours to keep.', w:'Zoom in on one record so they see the detail you capture and own.' },
+  { type:'counterbars', kick:'THE NUMBERS', sub:'Small change, big result.', w:'Put two bars side by side and let the numbers count up to the payoff.' },
+  { type:'personas', kick:'WORKS FOR ANYONE', sub:'Creator, team, or agency.', w:'Reassure them this works for every type of person in your audience.' },
+  { type:'endcta', title:'Reply <b>YES</b>', pill:'YOUR PROMISE', btn:'Get Started', w:'Close with one clear call to action and a soft pulsing button.' },
 ];
 
 const wc = s => s.trim().split(/\s+/).length;
@@ -126,7 +60,7 @@ S.forEach((s,i)=>{
     inner = kick + '<div class="split"><div class="scard sc'+i+'"><div class="mk x">&#10007;</div><div class="scl">'+s.left+'</div></div><div class="scard sc'+i+'"><div class="mk ok">&#10003;</div><div class="scl">'+s.right+'</div></div></div><div class="bigw blue" id="sw'+i+'" style="margin-top:34px">'+s.word+'</div>' + sub;
     tw.push('POPS("#s'+i+' .sc'+i+'",'+rr(t+0.5)+')'); tw.push('RISE("#sw'+i+'",'+rr(t+1.4)+')');
   } else if (s.type==='gohighlevel'){
-    inner = '<div class="ghl" id="gh'+i+'"><div class="ghside"><div class="ghbrand"><span class="ghlogo"></span>GoHighLevel</div><div class="ghnav on">Contacts</div><div class="ghnav">Calendars</div><div class="ghnav">Messages</div></div><div class="ghmain"><div class="ghtitle">Contact Details</div><div class="ghlbl">Full name</div><div class="ghinp" id="gn'+i+'"></div><div class="ghlbl">Email address</div><div class="ghinp" id="ge'+i+'"></div></div><div class="ghbubble" id="gb'+i+'">"How can I sign up?"</div></div>' + sub;
+    inner = '<div class="ghl" id="gh'+i+'"><div class="ghside"><div class="ghbrand"><span class="ghlogo"></span>Dashboard</div><div class="ghnav on">Contacts</div><div class="ghnav">Calendars</div><div class="ghnav">Messages</div></div><div class="ghmain"><div class="ghtitle">Contact Details</div><div class="ghlbl">Full name</div><div class="ghinp" id="gn'+i+'"></div><div class="ghlbl">Email address</div><div class="ghinp" id="ge'+i+'"></div></div><div class="ghbubble" id="gb'+i+'">"How can I sign up?"</div></div>' + sub;
     tw.push('R("#gh'+i+'",'+rr(t+0.4)+',1.0)'); tw.push('TYPE("#gn'+i+'","Alex Rivers",'+rr(t+1.2)+',1.4)'); tw.push('TYPE("#ge'+i+'","alex@email.com",'+rr(t+2.8)+',1.8)'); tw.push('POP("#gb'+i+'",'+rr(t+1.0)+')');
   } else if (s.type==='leadzoom'){
     inner = '<div class="lead" id="ld'+i+'"><div class="lhead"><div class="lav">AR</div><div><div class="lname">Alex Rivers</div><div class="lrole">YouTube viewer</div></div><div class="lbadge">ACTIVE LEAD</div></div><div class="lfields"><div><div class="lfk">PRIMARY INTENT</div><div class="lfv">Wants the guide</div></div><div><div class="lfk">TEMPERATURE</div><div class="lfv orange">Warm to Hot</div></div></div><div class="zoom" id="zm'+i+'"></div><div class="ztag" id="zt'+i+'">EXACTLY</div></div>' + sub;
@@ -184,7 +118,7 @@ const css = `
  .appic{width:112px;height:112px;border-radius:26px;background:${BLUE};box-shadow:0 22px 50px -20px rgba(26,115,232,.5);} .ectitle{font-size:128px;font-weight:800;letter-spacing:-2px;color:${NAVY};overflow:hidden;padding:0 8px;} .ectitle b{color:${BLUE};} .ecpill{font-size:38px;font-weight:700;letter-spacing:5px;color:#5b6b86;background:#fff;border-radius:50px;padding:18px 44px;box-shadow:0 14px 34px -14px rgba(14,32,56,.35);} .ecbtn{font-size:54px;font-weight:800;color:#fff;background:${ORANGE};border-radius:22px;padding:28px 60px;box-shadow:0 26px 60px -18px rgba(245,124,31,.6);}
 `;
 
-const H = '<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1920, height=1080"/><title>C2C Expansion Pack</title>'+
+const H = '<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1920, height=1080"/><title>Motion Graphics Video</title>'+
  '<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></scr'+'ipt><style>'+css+'</style></head><body>'+
  '<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="'+rr(D)+'">'+
  '<div class="g1"></div><div class="g2"></div><div class="grid"></div>'+

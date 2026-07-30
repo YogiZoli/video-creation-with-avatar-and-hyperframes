@@ -24,11 +24,12 @@ The render is 100% local, so the machine needs:
 - **ffmpeg / ffprobe** on the PATH (used for audio duration + `silencedetect` avatar timing).
 - **HyperFrames** — no install needed; it runs through `npx --yes hyperframes@0.7.68 ...`.
 - **Desktop Commander MCP** — so Claude can run `node`, the renderer, and git directly on the machine.
-- **ElevenLabs MCP/API** — for the cloned-voice voiceover (needs your own voice ID in config.yaml).
-- **HeyGen MCP/API** — for the avatar circles (needs your own avatar ID in config.yaml).
+- **ElevenLabs MCP/API — OPTIONAL** — best-quality cloned voice. If you have no ElevenLabs, the flow falls back to a FREE voice automatically.
+- **A free TTS for the fallback** — `edge-tts` (Microsoft free neural voices, no account, no key): `pip install edge-tts`. Only needed if you skip ElevenLabs.
+- **HeyGen MCP/API — OPTIONAL** — the corner avatar circles. If you have no HeyGen, the video is made WITHOUT any avatar.
 - **Google Drive MCP** — optional, for the DESIGN.md link and uploading finished deliverables.
 
-No paid render credits are used: the motion graphics render locally. Only ElevenLabs (voice) and HeyGen (avatar circles, ~15-25 credits) cost anything, and the avatar step is optional.
+**You can start with none of the optional services.** The motion graphics always render locally = 0 credits. With no ElevenLabs you get a free voiceover; with no HeyGen you get a clean video with no avatar. ElevenLabs (voice) and HeyGen (avatar circles, ~15-25 credits) are the only things that ever cost anything, and both are optional upgrades set in `config.yaml`.
 
 ## First-run notes
 - Copy `engine/build.mjs` and `engine/DESIGN.md` into your working folder (the path you set as `engine.local_dir` in config.yaml), and put your baked audio at `<local_dir>\assets\vo.mp3`.
