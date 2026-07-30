@@ -1,0 +1,15 @@
+{
+  "name": "yogizoli-video-marketplace",
+  "owner": { "name": "Zoltan Gero", "email": "humorketing@gmail.com" },
+  "metadata": {
+    "description": "Zoltan Gero's video tooling marketplace.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "video-creation-with-avatar-and-hyperframes",
+      "source": "./",
+      "description": "Local HyperFrames motion-graphics video builder + HeyGen avatar circles, with one-time YAML config."
+    }
+  ]
+}

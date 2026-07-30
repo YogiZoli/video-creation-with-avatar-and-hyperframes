@@ -1,0 +1,29 @@
+# ============================================================
+# video-creation-flow — ONE-TIME CONFIG
+# Fill every empty value once, then you never touch it again.
+# Each line tells you exactly what to paste.
+# ============================================================
+
+elevenlabs:
+  voice_id: ""                 # HERE you add YOUR ElevenLabs cloned-voice ID (the narrator voice). Example format: QVYdBjDIm5W2ck91Vu0Q
+  model: "eleven_multilingual_v2"   # Leave as is unless you specifically want another ElevenLabs model.
+  stability: 0.45              # Leave as is for a natural clone (0 = expressive, 1 = flat).
+  similarity: 0.85             # Leave as is (how close to your original voice).
+  style: 0.40                  # Leave as is.
+  speaker_boost: true          # Leave as is.
+  speed: 1.1                   # Leave as is (1.1 = slightly faster than default).
+
+heygen:
+  avatar_id: ""                # HERE you add YOUR HeyGen avatar ID for the corner circles.
+  engine: "avatar_iii"         # Leave as is (the avatar engine that lip-syncs correctly).
+  circle_px: 360               # Size of the avatar circle in the final video. Leave as is unless you want it bigger/smaller.
+
+engine:
+  local_dir: ""                # HERE you add the FULL path on YOUR machine to the working engine folder that holds build.mjs + DESIGN.md, e.g. C:\Users\you\HyperFrames\exp-v9  (copy the two files from this skill's engine/ folder into it, and put your baked audio at <local_dir>\assets\vo.mp3)
+  design_md_drive_url: ""      # HERE you add the Google Drive link to your DESIGN.md, if you keep a copy in Drive. Optional — the file also ships in engine/.
+
+music:
+  bgm_ceiling_percent: 10      # HERE is the MAX background-music volume. Never set above 10. Lower it for a quieter bed (1 to 3 is common).
+
+delivery:
+  drive_folder_url: ""         # HERE you add the Google Drive folder link where finished videos + project files get uploaded.

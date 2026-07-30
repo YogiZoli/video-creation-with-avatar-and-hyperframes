@@ -1,0 +1,8 @@
+{
+  "name": "video-creation-with-avatar-and-hyperframes",
+  "version": "1.0.0",
+  "description": "Build bright, dense kinetic-typography explainer videos with the local HyperFrames exp-v9 engine (0 render credits) plus optional HeyGen avatar circles. Approval-gated flow: script -> voiceover -> voiceover+music -> motion graphics -> avatar circles -> Drive delivery.",
+  "author": { "name": "Zoltan Gero", "email": "humorketing@gmail.com" },
+  "keywords": ["video", "motion-graphics", "hyperframes", "heygen", "elevenlabs", "youtube"],
+  "license": "MIT"
+}
